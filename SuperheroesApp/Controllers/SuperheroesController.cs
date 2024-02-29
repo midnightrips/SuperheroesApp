@@ -12,9 +12,9 @@ namespace SuperheroesApp.Controllers
 
         public SuperheroesController(ApplicationDbContext context) //class name
         {
-            _context = context; //test
+            _context = context;
         }
-
+                       
         // GET: SuperheroesController
         public ActionResult Index()
         {
@@ -27,6 +27,7 @@ namespace SuperheroesApp.Controllers
         public ActionResult Details(int id)
         {
             //LINQ query to find SPECIFIC row from table (specific superhero that matches the id passed in)
+            var superhero = _context.Superheroes.Where(s => s.Id == id);
             return View();
         }
 
@@ -45,6 +46,16 @@ namespace SuperheroesApp.Controllers
             try
             {
                 //LINQ query to add a superhero to to the table
+                superhero = new Superhero()
+                {
+                    Name = superhero.Name,
+                    AlterEgo = superhero.AlterEgo,
+                    PrimaryAbility = superhero.PrimaryAbility,
+                    SecondaryAbility = superhero.SecondaryAbility,
+                    Catchphrase = superhero.Catchphrase
+                };
+                _context.Superheroes.Add(superhero);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
