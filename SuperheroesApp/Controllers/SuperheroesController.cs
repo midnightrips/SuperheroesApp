@@ -78,6 +78,18 @@ namespace SuperheroesApp.Controllers
             try
             {
                 //LINQ query to edit details relating to the superhero
+                //var superhero = _context.Superheroes.Where(s => s.Id == id).SingleOrDefault()
+                superhero = new Superhero()
+                {
+                    Id = id,
+                    Name = superhero.Name,
+                    AlterEgo = superhero.AlterEgo,
+                    PrimaryAbility = superhero.PrimaryAbility,
+                    SecondaryAbility = superhero.SecondaryAbility,
+                    Catchphrase = superhero.Catchphrase
+                };
+                _context.Superheroes.Update(superhero);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -97,8 +109,15 @@ namespace SuperheroesApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Superhero superhero)
         {
+            superhero = new Superhero()
+            {
+                Id = id
+            };
+            var superhero = _context.Superheroes.Where(s => s.Id == id).SingleOrDefault();
             try
             {
+                //LINQ query to delete a superhero from the table
+                _context.Superheroes.Remove(superhero);
                 return RedirectToAction(nameof(Index));
             }
             catch
