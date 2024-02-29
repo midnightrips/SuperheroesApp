@@ -28,7 +28,7 @@ namespace SuperheroesApp.Controllers
         {
             //LINQ query to find SPECIFIC row from table (specific superhero that matches the id passed in)
             var superhero = _context.Superheroes.Where(s => s.Id == id);
-            return View();
+            return View(superhero);
         }
 
         // GET: SuperheroesController/Create
@@ -60,7 +60,7 @@ namespace SuperheroesApp.Controllers
             }
             catch
             {
-                return View();
+                return View(superhero);
             }
         }
 
@@ -94,7 +94,7 @@ namespace SuperheroesApp.Controllers
             }
             catch
             {
-                return View();
+                return View(superhero);
             }
         }
 
@@ -122,7 +122,7 @@ namespace SuperheroesApp.Controllers
             }
             catch
             {
-                return View();
+                return View(superhero);
             }
         }
     }
