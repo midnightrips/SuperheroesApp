@@ -20,7 +20,7 @@ namespace SuperheroesApp.Controllers
         {
             //LINQ query to retrieve all rows from table (all superheroes)
             var superheroes = _context.Superheroes.ToList(); ;
-           return View(superheroes);
+            return View(superheroes);
         }
 
         // GET: SuperheroesController/Details/5
@@ -109,14 +109,15 @@ namespace SuperheroesApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Superhero superhero)
         {
-            superhero = new Superhero()
-            {
-                Id = id
-            };
-            var superhero = _context.Superheroes.Where(s => s.Id == id).SingleOrDefault();
+            //superhero = new Superhero()
+            //{
+            //    Id = id
+            //};
+            
             try
             {
                 //LINQ query to delete a superhero from the table
+                superhero = _context.Superheroes.Where(s => s.Id == id).SingleOrDefault();
                 _context.Superheroes.Remove(superhero);
                 return RedirectToAction(nameof(Index));
             }
