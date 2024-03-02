@@ -79,7 +79,7 @@ namespace SuperheroesApp.Controllers
             {
                 //LINQ query to edit details relating to the superhero
                 //var superhero = _context.Superheroes.Where(s => s.Id == id).SingleOrDefault()
-                superhero = new Superhero()
+                superhero = new Superhero() //this clears the existing info though so need to change this line of code
                 {
                     Id = id,
                     Name = superhero.Name,
@@ -119,6 +119,7 @@ namespace SuperheroesApp.Controllers
                 //LINQ query to delete a superhero from the table
                 superhero = _context.Superheroes.Where(s => s.Id == id).SingleOrDefault();
                 _context.Superheroes.Remove(superhero);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch

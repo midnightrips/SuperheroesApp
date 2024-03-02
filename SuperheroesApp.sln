@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "styles", "styles", "{6BC06806-FAA8-4F80-8278-0E176B29043D}"
 	ProjectSection(SolutionItems) = preProject
 		styles.css = styles.css
+		SuperheroesApp\Images\superheroes.PNG = SuperheroesApp\Images\superheroes.PNG
 	EndProjectSection
 EndProject
 Global
