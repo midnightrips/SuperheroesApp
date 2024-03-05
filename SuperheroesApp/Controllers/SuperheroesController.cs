@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Signing;
 using SuperheroesApp.Data;
 using SuperheroesApp.Models;
 
@@ -27,7 +28,7 @@ namespace SuperheroesApp.Controllers
         public ActionResult Details(int id)
         {
             //LINQ query to find SPECIFIC row from table (specific superhero that matches the id passed in)
-            var superhero = _context.Superheroes.Where(s => s.Id == id);
+            var superhero = _context.Superheroes.Find(id);
             return View(superhero);
         }
 
@@ -67,7 +68,8 @@ namespace SuperheroesApp.Controllers
         // GET: SuperheroesController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var superhero = _context.Superheroes.Find(id);
+            return View(superhero);
         }
 
         // POST: SuperheroesController/Edit/5
@@ -79,15 +81,24 @@ namespace SuperheroesApp.Controllers
             {
                 //LINQ query to edit details relating to the superhero
                 //var superhero = _context.Superheroes.Where(s => s.Id == id).SingleOrDefault()
-                superhero = new Superhero() //this clears the existing info though so need to change this line of code
-                {
-                    Id = id,
-                    Name = superhero.Name,
-                    AlterEgo = superhero.AlterEgo,
-                    PrimaryAbility = superhero.PrimaryAbility,
-                    SecondaryAbility = superhero.SecondaryAbility,
-                    Catchphrase = superhero.Catchphrase
-                };
+                //superhero = new Superhero() //this clears the existing info though so need to change this line of code
+                //{
+                //    Id = id,
+                //    Name = superhero.Name,
+                //    AlterEgo = superhero.AlterEgo,
+                //    PrimaryAbility = superhero.PrimaryAbility,
+                //    SecondaryAbility = superhero.SecondaryAbility,
+                //    Catchphrase = superhero.Catchphrase
+                //};
+                var existingSuperhero = _context.Superheroes.Where(s => s.Id == id).SingleOrDefault();
+                existingSuperhero.Name = superhero.Name;
+                existingSuperhero.AlterEgo = superhero.AlterEgo;
+                existingSuperhero.PrimaryAbility = superhero.PrimaryAbility;
+                existingSuperhero.SecondaryAbility = superhero.SecondaryAbility;
+                existingSuperhero.Catchphrase = superhero.Catchphrase;
+
+                superhero = existingSuperhero;
+                
                 _context.Superheroes.Update(superhero);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
